@@ -118,7 +118,7 @@ export default function Home({ projects, services, testimonials, faqs }) {
 }
 
 export async function getServerSideProps() {
-  const apiUrl = import.meta.env.VITE_API_URL || 'https://portfolio-tpmf.onrender.com';
+  const apiUrl =  process.env.VITE_API_URL;
   
   try {
     const [projectsRes, servicesRes, testimonialsRes, faqsRes] = await Promise.all([

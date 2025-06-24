@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import axios from 'axios';
+import Link from 'next/link';
 
 export default function Blog({ posts }) {
   return (
@@ -14,7 +15,7 @@ export default function Blog({ posts }) {
       <section className="container-custom mb-16">
         <div className="grid md:grid-cols-3 gap-8">
           {posts.map((post, i) => (
-            <motion.div key={post.title} className="bg-secondary rounded-xl overflow-hidden shadow-lg flex flex-col" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }} whileHover={{ y: -5 }}>
+            <Link key={post.slug} href={`/blog/${post.slug}`} className="bg-secondary rounded-xl overflow-hidden shadow-lg flex flex-col hover:scale-[1.02] transition">
               <img src={post.image} alt={post.title} className="w-full h-56 object-cover" />
               <div className="p-6 flex-1 flex flex-col justify-between">
                 <div>
@@ -22,10 +23,10 @@ export default function Blog({ posts }) {
                   <h3 className="text-xl font-semibold mb-2">{post.title}</h3>
                 </div>
                 <div className="mt-4">
-                  <a href={post.url || '#'} className="text-accent font-semibold hover:underline">Learn more &rarr;</a>
+                  <span className="text-accent font-semibold hover:underline">Learn more &rarr;</span>
                 </div>
               </div>
-            </motion.div>
+            </Link>
           ))}
         </div>
       </section>

@@ -2,6 +2,10 @@ import { motion } from 'framer-motion';
 import axios from 'axios';
 
 export default function Store({ items, testimonials }) {
+
+  console.log("ENV API_URL:", process.env.API_URL);
+  console.log("ENV API_URL:", process.env.NEXT_PUBLIC_API_URL);
+
   return (
     <main className="bg-primary">
       {/* Header */}

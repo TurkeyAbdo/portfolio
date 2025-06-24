@@ -1,7 +1,11 @@
 import { motion } from 'framer-motion';
 import axios from 'axios';
+import dotenv from 'dotenv';
+dotenv.config();
 
 export default function Store({ items }) {
+  console.log("ENV API_URL:", process.env.API_URL);
+
   return (
     <main className="container-custom py-16">
       <h1 className="section-title">Explore Curated Designs Crafted with Passion.</h1>
@@ -28,7 +32,7 @@ export default function Store({ items }) {
 }
 
 export async function getServerSideProps() {
-  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+  const API_URL = process.env.API_URL;
   try {
     const res = await axios.get(`${API_URL}/api/store`);
     return { props: { items: res.data } };

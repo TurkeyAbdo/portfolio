@@ -28,7 +28,7 @@ export default function Work({ projects }) {
 }
 
 export async function getServerSideProps() {
-  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+  const API_URL = process.env.API_URL;
   try {
     const res = await axios.get(`${API_URL}/api/projects`);
     return { props: { projects: res.data } };

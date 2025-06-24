@@ -3,6 +3,7 @@ import axios from 'axios';
 
 export default function Store({ items }) {
   console.log("ENV API_URL:", process.env.API_URL);
+  console.log("ENV API_URL:", process.env.NEXT_PUBLIC_API_URL);
 
   return (
     <main className="container-custom py-16">
@@ -32,7 +33,7 @@ export default function Store({ items }) {
 export async function getServerSideProps() {
   const API_URL = process.env.API_URL;
   try {
-    const res = await axios.get(`https://portfolio-tpmf.onrender.com/api/store`);
+    const res = await axios.get(`${API_URL}/api/store`);
     return { props: { items: res.data } };
   } catch (error) {
     return { props: { items: [] } };

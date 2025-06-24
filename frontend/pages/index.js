@@ -1,5 +1,12 @@
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
+import { useState, useEffect } from 'react';
+
+const heroImages = [
+  'https://placehold.co/600x350/18191C/FFF?text=Hero+1',
+  'https://placehold.co/600x350/23242A/FFF?text=Hero+2',
+  'https://placehold.co/600x350/3B82F6/FFF?text=Hero+3',
+];
 
 export default function Home({ projects, services, store, testimonials, blog }) {
   // Animation variants
@@ -9,18 +16,55 @@ export default function Home({ projects, services, store, testimonials, blog }) 
     transition: { duration: 0.5 }
   };
 
+  // Autoplay slider state
+  const [current, setCurrent] = useState(0);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % heroImages.length);
+    }, 2500);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <main className="bg-primary">
       {/* Hero Section */}
-      <motion.section initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} className="container-custom pt-20 pb-16 text-center">
-        <h1 className="text-4xl md:text-6xl font-bold mb-4">Crafting Crazy Experiences,<br className="hidden md:block"/> One Pixel at a Time.</h1>
-        <p className="text-lg md:text-xl text-gray-300 mb-8 max-w-2xl mx-auto">Hi, I'm a product designer who transforms ideas into seamless, user-centered solutions.</p>
-        <div className="flex flex-col md:flex-row gap-4 justify-center mb-8">
-          <button className="bg-accent px-6 py-3 rounded-lg font-semibold">View Work</button>
-          <button className="bg-secondary px-6 py-3 rounded-lg font-semibold border border-white/10">See Plans</button>
+      <section className="container-custom pt-20 pb-16 flex flex-col md:flex-row items-center gap-8">
+        {/* Left: Text */}
+        <div className="flex-1 text-left">
+          <h1 className="text-4xl md:text-6xl font-bold mb-4">Crafting Crazy Experiences,<br className="hidden md:block"/> One Pixel at a Time.</h1>
+          <p className="text-lg md:text-xl text-gray-300 mb-8 max-w-xl">Hi, I'm a product designer who transforms ideas into seamless, user-centered solutions.</p>
+          <div className="flex flex-col md:flex-row gap-4 mb-8">
+            <button className="bg-accent px-6 py-3 rounded-lg font-semibold">View Work</button>
+            <button className="bg-secondary px-6 py-3 rounded-lg font-semibold border border-white/10">See Plans</button>
+          </div>
         </div>
-        <img src="https://placehold.co/800x200?text=Hero+Image" alt="Hero" className="mx-auto rounded-xl shadow-lg mb-8" />
-      </motion.section>
+        {/* Right: Autoplay Slider */}
+        <div className="flex-1 flex justify-center items-center w-full max-w-lg">
+          <div className="relative w-full h-[350px] rounded-xl overflow-hidden shadow-lg">
+            <AnimatePresence initial={false}>
+              <motion.img
+                key={current}
+                src={heroImages[current]}
+                alt={`Hero Slide ${current + 1}`}
+                className="absolute w-full h-full object-cover"
+                initial={{ opacity: 0, x: 40 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -40 }}
+                transition={{ duration: 0.6 }}
+              />
+            </AnimatePresence>
+            {/* Dots */}
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+              {heroImages.map((_, idx) => (
+                <span
+                  key={idx}
+                  className={`w-3 h-3 rounded-full ${idx === current ? 'bg-accent' : 'bg-gray-600'} inline-block`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Services/Process Section */}
       <section className="container-custom py-16">

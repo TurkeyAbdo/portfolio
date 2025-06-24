@@ -118,7 +118,7 @@ export default function Home({ projects, services, testimonials, faqs }) {
 }
 
 export async function getServerSideProps() {
-  const apiUrl =  process.env.VITE_API_URL;
+  const apiUrl =  process.env.NEXT_PUBLIC_API_URL;
   
   try {
     const [projectsRes, servicesRes, testimonialsRes, faqsRes] = await Promise.all([
